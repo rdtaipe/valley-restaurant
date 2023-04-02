@@ -1,0 +1,21 @@
+{
+  "name": "valley-restaurant",
+  "version": "1.0.0",
+  "description": "restaurant e-commerce | stack MERN",
+  "main": "index.js",
+  "scripts": {
+    "server":"cd server && npm run dev",
+    "client":"cd client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdtaipe/valley-restaurant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdtaipe/valley-restaurant/issues"
+  },
+  "homepage": "https://github.com/rdtaipe/valley-restaurant#readme"
+}
