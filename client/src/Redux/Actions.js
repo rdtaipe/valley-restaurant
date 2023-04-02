@@ -1,7 +1,7 @@
 import axios from 'axios'
 import colors from '../colors'
 
-export const State = {
+export const initialState = {
     actions:{},
     global:{
         page:"",
@@ -103,7 +103,7 @@ export const State = {
         ]
     },
 }
-export const Actions ={
+export const reducers ={
     addActions: (state, action) => {
         state.actions={...state.actions,...action.payload}
     },
