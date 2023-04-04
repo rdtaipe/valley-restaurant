@@ -1,11 +1,8 @@
 import axios from 'axios'
 import colors from '../colors'
-<<<<<<< HEAD
-=======
 import {getCookie,saveCookie,getLocal,saveLocal} from './Utils/saveLocal'
 
 // localStorage.getItem('theme')===null?saveLocal('theme','light'):null
->>>>>>> ts
 
 export const initialState = {
     actions:{},
@@ -88,11 +85,6 @@ export const initialState = {
     animation:{
         open:".4,0,0,1"
     },
-<<<<<<< HEAD
-    menu:{
-        open:true,
-        width:280,
-=======
     navbar:{
         divice:0,//0=desktop,1=tablet,2=mobile
         height:[60,50,40],
@@ -104,7 +96,6 @@ export const initialState = {
         open:true,
         width:280,
         
->>>>>>> ts
         setWidth:"",
         items:[
             {type:"item",name:"Dashboard",active:false,sx:{m:"20px 0px"}},
@@ -148,44 +139,3 @@ export const reducers ={
 
 }
 
-<<<<<<< HEAD
-// save local storage
-const saveLocal = (key,v) => {
-    try {
-        const data = JSON.stringify(v)
-        localStorage.setItem(key, data)
-    } catch (e) {
-        console.log(e)
-    }
-}
-const getLocal = (key) => {
-    try {
-        const data = localStorage.getItem(key)
-        return JSON.parse(data)
-    } catch (e) {
-        console.log(e)
-    }
-}
-localStorage.getItem('theme')===null?saveLocal('theme','light'):null
-
-
-//save cookien for 24 hours
-const saveCookie = (key,v) => {
-    try {
-        const data = JSON.stringify(v)
-        document.cookie = `${key}=${data};max-age=86400`
-    } catch (e) {
-        console.log(e)
-    }
-}
-const getCookie = (key) => {
-    try {
-        const data = document.cookie.split(';').find(c => c.trim().startsWith(`${key}=`))
-        return JSON.parse(data.split('=')[1])
-    } catch (e) {
-        console.log(e)
-    }
-}
-=======
-
->>>>>>> ts
