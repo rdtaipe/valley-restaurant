@@ -1,14 +1,8 @@
 
 # dependencies
-/node_modules
+
 node_modules
-
 dist
-/dist
-
 .parcel-cache
-/.parcel-cache
-
-/package-lock.json
 package-lock.json
 

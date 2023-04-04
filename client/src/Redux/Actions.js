@@ -1,5 +1,11 @@
 import axios from 'axios'
 import colors from '../colors'
+<<<<<<< HEAD
+=======
+import {getCookie,saveCookie,getLocal,saveLocal} from './Utils/saveLocal'
+
+// localStorage.getItem('theme')===null?saveLocal('theme','light'):null
+>>>>>>> ts
 
 export const initialState = {
     actions:{},
@@ -82,9 +88,23 @@ export const initialState = {
     animation:{
         open:".4,0,0,1"
     },
+<<<<<<< HEAD
     menu:{
         open:true,
         width:280,
+=======
+    navbar:{
+        divice:0,//0=desktop,1=tablet,2=mobile
+        height:[60,50,40],
+        
+
+
+    },
+    menu:{
+        open:true,
+        width:280,
+        
+>>>>>>> ts
         setWidth:"",
         items:[
             {type:"item",name:"Dashboard",active:false,sx:{m:"20px 0px"}},
@@ -104,52 +124,22 @@ export const initialState = {
     },
 }
 export const reducers ={
-    addActions: (state, action) => {
-        state.actions={...state.actions,...action.payload}
-    },
-    toggleMenu: (state, action) => {
-        state.menu.open=!state.menu.open
-        state.menu.width=state.menu.open?280:60
-    },
-    setActiveMenuItem: (state, action) => {
-     
-            state.menu.items.map(item=>{
-                if(item.name.toLowerCase()===action.payload.toLowerCase()){
-                    item.active=true
-                }else{
-                    item.active=false
-                }
-            })
-        
-      
-    },
-    changeTheme:(state,action)=>{
-        const theme=getLocal("theme")
-         saveLocal("theme",theme === "dark" ? "light" : "dark")
-        state.theme.setMode=theme === "dark" ? "light" : "dark"
-    }, 
-    setUrlBase:(state,action)=>{
-        state.server.url=action.payload
-    },
-    setGlobalData:(state,action)=>{
-        state.global.data=action.payload
-    },
-    setModel:(state,action)=>{
-        state.global.model=action.payload
-    },
-    setItemSelected:(state,action)=>{
-        state.global.itemSelected=action.payload
-    },
-    setUser:(state,action)=>{
-        const {key,value}=action.payload
-        if(key==="autorized"){
-            saveLocal("autorized",value)
-        }else if(key==="token"){
-            saveCookie("token",value)
-        }else{
-            state.user[key]=value
 
+    setState:(state,action)=>{
+        //key: "menu.itmes.home"
+        const {keys,value}=action.payload
+        //recusive function
+        console.log(keys)
+        const bucle=(obj,keys,value)=>{
+            if(keys.length===1){
+                obj[keys[0]]=value
+            }else{
+                bucle(obj[keys[0]],keys.slice(1),value)
+            }
+
+           
         }
+        bucle(state,keys.split("."),value)
     }
 
 
@@ -158,6 +148,7 @@ export const reducers ={
 
 }
 
+<<<<<<< HEAD
 // save local storage
 const saveLocal = (key,v) => {
     try {
@@ -195,3 +186,6 @@ const getCookie = (key) => {
         console.log(e)
     }
 }
+=======
+
+>>>>>>> ts
