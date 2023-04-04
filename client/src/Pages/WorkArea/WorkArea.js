@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from "react";
-import Moveable from "./Canvas/Canvas";
-import './App.css'
+import Canvas from "./Canvas/Canvas";
 export default function WorkArea(props) {
 
 
   return (
 
       <div className="work-area">
-        <Moveable />
+        <Canvas />
       </div>
 
     
