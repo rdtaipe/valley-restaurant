@@ -1,14 +1,14 @@
 import React from 'react'
 import InfiniteViewer from 'react-infinite-viewer';
+import styled from 'styled-components';
 
 
-export default function InfiniteViewerComponent({ children, viewerRef,onScroll,onPinch }) {
+export default function View({ children, viewerRef,onScroll,onPinch }) {
 
 
     return (
-        <InfiniteViewer
+        <Container
             ref={viewerRef} 
-            className="viewer"
             useAutoZoom={true}
             useWheelScroll={true}
             onScroll={onScroll}
@@ -26,6 +26,16 @@ export default function InfiniteViewerComponent({ children, viewerRef,onScroll,o
 
             {children}
 
-        </InfiniteViewer>
+        </Container>
     )
 }
+
+const Container = styled(InfiniteViewer)`
+
+position: absolute;
+  top: 30px;
+  left: 30px;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+
+`

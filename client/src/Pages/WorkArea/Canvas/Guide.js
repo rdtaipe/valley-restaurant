@@ -2,7 +2,7 @@ import React,{useState,useRef} from 'react'
 import styled from 'styled-components';
 import Guides from '@scena/react-guides';
 
-export default function GuidesComponent({type,guidesRef,zoom,unit}) {
+export default function Guide({type,guidesRef,zoom,unit}) {
     // ref =ref
     // type = horizontal,vertical
     // zoom = 1

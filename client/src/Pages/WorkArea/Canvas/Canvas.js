@@ -1,13 +1,14 @@
 import React, { useRef, useEffect } from 'react';
-import InfiniteViewer from './InfiniteViewer';
 
 import Selecto from 'react-selecto';
 import Moveable from 'react-moveable';
 import styled from 'styled-components';
 
-import Guides from './Guides';
+import Guide from './Guide';
+import View from './View';
 
-export default function MoveableComponent(props) {
+
+export default function Canvas(props) {
     const viewerRef = React.useRef(null);
     const [zoom, setZoom] = React.useState(1);
     const unit = Math.round(Math.floor(1 / zoom) * 50) || 50;
@@ -27,10 +28,10 @@ export default function MoveableComponent(props) {
 
     return (
         <Container style={{ backgroundColor: "#eee" }}>
-            <Guides guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
-            <Guides guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
+            <Guide guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
+            <Guide guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
 
-            <InfiniteViewer
+            <View
                 viewerRef={viewerRef}
                 onScroll={(e) => {
                     horizontalGuidesRef.current.scroll(e.scrollLeft);
@@ -47,7 +48,8 @@ export default function MoveableComponent(props) {
                 }}
             >
             <div  className='moveable-container viewer' style={{ backgroundColor: "#fff", height: 600, width: 600 }}>
-                    <Selecto
+
+<Selecto
                         ref={selectoRef}
                         dragContainer={'.moveable-container'}
                         selectableTargets={[".moveable"]}
@@ -109,13 +111,14 @@ export default function MoveableComponent(props) {
 
 
                         />
+                
 
                         <Rect className="moveable" ></Rect>
                         <Circle className="moveable" ></Circle>
                     
                 </div>
 
-            </InfiniteViewer>
+            </View>
         </Container>
     );
 }
