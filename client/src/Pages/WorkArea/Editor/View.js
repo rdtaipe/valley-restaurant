@@ -3,7 +3,7 @@ import InfiniteViewer from 'react-infinite-viewer';
 import styled from 'styled-components';
 
 
-export default function View({ children, viewerRef,onScroll,onPinch }) {
+export default function Editor({ children, viewerRef,onScroll,onPinch }) {
 
 
     return (

@@ -1,18 +1,18 @@
-import React,{useState,useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components';
 import Guides from '@scena/react-guides';
 
-export default function Guide({type,guidesRef,zoom,unit}) {
+export default function Guide({ type, guidesRef, zoom, unit }) {
     // ref =ref
     // type = horizontal,vertical
     // zoom = 1
     // unit = 50
-    if(!type||!guidesRef||!zoom||!unit){ return null }
+    if (!type || !guidesRef || !zoom || !unit) { return null }
 
     return (
-         <Container type={type} n={30}>
-                <Guides
-              
+        <Container type={type} n={30}>
+            <Guides
+
                 backgroundColor="#DDDDDD"
                 textColor="gray"
                 lineColor="gray"
@@ -24,18 +24,19 @@ export default function Guide({type,guidesRef,zoom,unit}) {
                 snapThreshold={5}
                 zoom={zoom}
                 unit={unit}
-                />
-            </Container>
+            />
+        </Container>
     )
 }
 
 const Container = styled.div`
     position: absolute;
-    height: ${({ type , n }) => (type === "horizontal" ? n+"px" : `calc(100% - ${n}px)`)};
-    width: ${({ type , n}) => (type === "horizontal" ? `calc(100% - ${n}px)` :  n+"px" )};
-    left: ${({ type , n}) => (type === "horizontal" ? n+"px": "0")};
-    top: ${({ type , n}) => (type === "horizontal" ? "0" : n+"px")};
-  
+    /* overflow: hidden; */
+    height: ${({ type, n }) => (type === "horizontal" ? n + "px" : `calc(100% - ${n}px)`)};
+    width: ${({ type, n }) => (type === "horizontal" ? `calc(100% - ${n}px)` : n + "px")};
+    left: ${({ type, n }) => (type === "horizontal" ? n + "px" : "0")};
+    top: ${({ type, n }) => (type === "horizontal" ? "0" : n + "px")};
+    /* border-radios:50%; */
     & .scena-guides-guide{
         background-color:  aqua!important;
     }

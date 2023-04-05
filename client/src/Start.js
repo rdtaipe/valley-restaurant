@@ -7,7 +7,7 @@ import Routes from './Routes/Routes'
 
 export default function Start(props) {
     const dispatch = useDispatch()
-    dispatch(actions.setState({keys:"actions",value:actions}))
+    dispatch(actions.setActions(actions))
   
     return (
         <>
