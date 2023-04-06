@@ -93,6 +93,9 @@ justify-content: center;
 align-items: center;
 &.active{
     background: #3389ff;
+    & i{
+        color: #fff;
+    }
 }
 
 `
