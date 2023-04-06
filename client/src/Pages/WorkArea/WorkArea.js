@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, {useState, useRef, useEffect } from "react";
 import Editor from "./Editor/Editor";
 import Toolbar from "./Toolbar/Toolbar";
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,6 +13,7 @@ export default function WorkArea(props) {
   const lefttoolbar = useSelector(state => state.toolbar.left)
   const righttoolbar = useSelector(state => state.toolbar.right)
   const space = useSelector(state => state.workspace)
+  // const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     // console.log(lefttoolbar)
@@ -25,17 +26,13 @@ export default function WorkArea(props) {
 
       <Editor style={{ left: space.left, bottom: 0, width: `calc( 100vw - ${(space.left * 2)}px )`, height: `calc( 100vh - ${space.top}px )` }} />
       <Toolbar align="left" width={40} style={{ top: space.top }} items={lefttoolbar} selected={(e, v) => {
-        // console.log(v.ac)
-        // console.log(actions)
 
-     
-  
-         dispatch(actions.setState({keys:"toolbar.left."+v.id,value:{active:true},only:true}))
-        console.log(lefttoolbar)
-
+         dispatch(actions.setState({keys:"toolbar.left."+v.id,value:{active:!v.active},only:true}))
+      
       }} />
       <Toolbar align="right" width={40} style={{ top: space.top }} items={righttoolbar} selected={(e, v) => {
-        console.log(e, v)
+      dispatch(actions.setState({keys:"toolbar.right."+v.id,value:{active:!v.active},only:true}))
+
       }}
       />
     </div>

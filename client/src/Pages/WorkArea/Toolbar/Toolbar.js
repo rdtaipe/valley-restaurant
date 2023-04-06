@@ -65,7 +65,7 @@ export default function Toolbar({ align, items,width,height, selected, style, sx
         >
 
             {items.map((item, i) => (
-                <Li key={i} disablePadding style={itemStyle}>
+                <Li key={i} disablePadding style={itemStyle} className={item.active?"active":" "}>
                     <LiButton onClick={(e) => selected(e, item)}>
                             <Icon className={item.icon} />
                     </LiButton>
@@ -91,7 +91,9 @@ border-radius: 4px!important;
 display: flex;
 justify-content: center;
 align-items: center;
-
+&.active{
+    background: #3389ff;
+}
 
 `
 const LiButton = styled(ListItemButton)`
