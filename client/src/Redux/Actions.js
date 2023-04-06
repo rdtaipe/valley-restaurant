@@ -137,6 +137,15 @@ export const initialState = {
         right: [
             { id: 1, type: "properties", active: false, icon: "tune", tooltip: "Propiedades", shortcut: "ctrl+p" },
             { id: 2, type: "layers", active: false, icon: "layers", tooltip: "Capas", shortcut: "ctrl+y" },
+        ],
+        test:[
+            { id:1,obj:{
+                type: "properties", arr:[{id:"sad",name:"hola"},{id:"awqr",name:"hola"}]
+            } },
+            { id:2,obj:{
+                type: "layers", arr:[{id:"23w",name:"hola"},{id:"as2wqr",name:"hola"}]
+            } },
+
         ]
     }
 }
@@ -146,18 +155,45 @@ export const reducers = {
     },
 
     setState: (state, action) => {
-        const { keys, value, only } = action.payload
+         const { keys, value, only } = action.payload
+    //    var keys="toolbar.test.1", value={name:"juan"}, only=true
+
+        // "abk.123.abc.234"
         // ({keys:"toolbar.left.type",value:v,only:true}))
+        //if arra= value:{id:1,active:true}
+        //if object=value:"hola"
         // console.log(keys,"on")
         //key: "menu.itmes.home"
         if (keys) {
             if (keys.includes(".")) {
 
-                const newKeys = keys.split(".")
-                const last = newKeys[newKeys.length - 1]
+                // const newKeys = keys.split(".")
+                // const last = newKeys[newKeys.length - 1]
 
-
-                const recursive = (state, i) => {
+                function updateObjectOrArray(obj, keys, value) {
+                    if (!obj || !keys) return obj;
+                    
+                    const [currentKey, ...remainingKeys] = keys.split('.');
+                    const type = Object.prototype.toString.call(obj[currentKey])
+                   
+                    if (type === '[object Array]') {
+                      const index = obj[currentKey].findIndex(item => item.id.toString() === remainingKeys[0])
+                      if (index !== -1) {
+                        remainingKeys.length === 1
+                          ? (obj[currentKey][index] = { ...obj[currentKey][index], ...value })
+                          : updateObjectOrArray(obj[currentKey][index], remainingKeys.slice(1).join('.'), value)
+                      }
+                    } else if (type === '[object Object]') {
+                      obj[currentKey] = remainingKeys.length ? updateObjectOrArray(obj[currentKey], remainingKeys.join('.'), value) : value;
+                    }
+                    
+                    return obj;
+                  }
+                  var newState={...state}
+                  
+                    const updatedObj = updateObjectOrArray(newState, keys, value);
+               console.log(updatedObj.toolbar.test)
+            /*     const recursive = (state, i) => {
                     const type = Object.prototype.toString.call(state[newKeys[i]]) || null//si es array detener si no seguir
                     const RealData = JSON.parse(JSON.stringify(state[newKeys[i]]))
 
@@ -206,7 +242,7 @@ export const reducers = {
                 };
                 recursive(state, 0);
 
-
+ */
 
 
                 //key=toolbar, i=0, obj=state

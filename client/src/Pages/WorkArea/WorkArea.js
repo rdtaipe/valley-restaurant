@@ -29,9 +29,8 @@ export default function WorkArea(props) {
         // console.log(actions)
 
      
-        var newV = {...v,active:true}
   
-         dispatch(actions.setState({keys:"toolbar.left",value:newV,only:true}))
+         dispatch(actions.setState({keys:"toolbar.left."+v.id,value:{active:true},only:true}))
         console.log(lefttoolbar)
 
       }} />
