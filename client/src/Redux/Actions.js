@@ -3,7 +3,6 @@ import colors from '../colors'
 import { getCookie, saveCookie, getLocal, saveLocal } from './Utils/saveLocal'
 
 // localStorage.getItem('theme')===null?saveLocal('theme','light'):null
-
 export const initialState = {
     actions: {},
     global: {
@@ -188,7 +187,6 @@ export const reducers = {
                                     if(i===index){
                                         item[newKeys]=newValue
                                     }
-
                                     return item
                                 })
                                 return obj[currentKey] = newData
@@ -201,13 +199,28 @@ export const reducers = {
                         }
                     }
                     } else if (type === '[object Object]') {
-                      obj[currentKey] = remainingKeys.length ? updateObjectOrArray(obj[currentKey], remainingKeys.join('.'), value) : value;
+                        //keys:"workspace.right",value:200
+
+                        if(remainingKeys.length === 1){
+                            obj[currentKey][remainingKeys[0]] = value
+
+                        }else{
+                            obj[currentKey] = remainingKeys.length ? updateObjectOrArray(obj[currentKey], remainingKeys.join('.'), value) : value;
+                        }
                     }
 
                     return obj;
                   }
                   var newState={...state}
-               updateObjectOrArray(newState, keys, value);
+               var st=updateObjectOrArray(newState, keys, value);
+                // console.log(JSON.parse(JSON.stringify(st.workspace)))
+
+
+
+               
+
+
+
             //    console.log(updatedObj.toolbar)
             /*     const recursive = (state, i) => {
                     const type = Object.prototype.toString.call(state[newKeys[i]]) || null//si es array detener si no seguir
@@ -347,3 +360,4 @@ export const reducers = {
 
 }
 
+const parse=(v)=>JSON.parse(JSON.stringify(v))

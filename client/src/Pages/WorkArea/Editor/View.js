@@ -1,27 +1,50 @@
 import React from 'react'
 import InfiniteViewer from 'react-infinite-viewer';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 
 
-export default function Editor({ children, viewerRef,onScroll,onPinch }) {
+export default function Editor({ children, setZoom, viewerRef, onScroll, onPinch, horizontalGuidesRef, verticalGuidesRef }) {
+
+    const space = useSelector(state => state.workspace)
 
 
     return (
         <Container
-            ref={viewerRef} 
+            ref={viewerRef}
             useAutoZoom={true}
             useWheelScroll={true}
-            onScroll={onScroll}
-            onPinch={onPinch}
-            // horizontal={true}
-            // vertical={true}
-            // zoom={1}
-            // zoomSpeed={0.1}
-            // margin={0}
-            // threshold={0}
-            // rangeX={[0, 0]}
-            // rangeY={[0, 0]}
-            // useWheelScroll={true}
+            space={space}
+        // horizontal={true}
+        // vertical={true}
+        // zoom={1}
+        // zoomSpeed={0.1}
+        // margin={0}
+        // threshold={0}
+        // rangeX={[0, 0]}
+        // rangeY={[0, 0]}
+        // useWheelScroll={true}
+        /*  onScroll={(e) => {
+             horizontalGuidesRef.current.scroll(e.scrollLeft);
+             horizontalGuidesRef.current.scrollGuides(e.scrollTop);
+
+             verticalGuidesRef.current.scroll(e.scrollTop);
+             verticalGuidesRef.current.scrollGuides(e.scrollLeft);
+             if(onScroll){
+                 onScroll(e)
+
+             }
+         }}
+         onPinch={(e) => {
+             const zoom = e.zoom;
+             horizontalGuidesRef.current.zoomTo(zoom);
+             verticalGuidesRef.current.zoomTo(zoom);
+             if(onPinch){
+                 onPinch(e)
+             }
+             setZoom(e.zoom);
+
+         }} */
         >
 
             {children}
@@ -31,11 +54,9 @@ export default function Editor({ children, viewerRef,onScroll,onPinch }) {
 }
 
 const Container = styled(InfiniteViewer)`
-
 position: absolute;
-  top: 30px;
-  left: 30px;
-  width: calc(100% - 30px);
-  height: calc(100% - 30px);
+left:${({ space }) => space.left}px;
+width: calc(100% - ${({ space }) => space.left}px );
+height: calc(100%);
 
 `

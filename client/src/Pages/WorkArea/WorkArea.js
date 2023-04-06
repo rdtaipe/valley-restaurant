@@ -18,13 +18,13 @@ export default function WorkArea(props) {
   useEffect(() => {
     // console.log(lefttoolbar)
     // console.log(righttoolbar)
-  }, [lefttoolbar, righttoolbar])
+  }, [lefttoolbar, righttoolbar,space])
 
   return (
     <div className="work-area" style={{ marginTop: space.top }}>
       <Navbar />
 
-      <Editor style={{ left: space.left, bottom: 0, width: `calc( 100vw - ${(space.left * 2)}px )`, height: `calc( 100vh - ${space.top}px )` }} />
+      <Editor style={{ left: 0, top: 0, width: `calc( 100vw - ${(space.right)}px )`, height: `calc( 100vh - ${space.top}px )` }} />
       <Toolbar align="left" width={40} style={{ top: space.top }} items={lefttoolbar} selected={(e, v) => {
 
          dispatch(actions.setState({keys:"toolbar.left."+v.id,value:{active:!v.active},only:true}))
@@ -32,6 +32,8 @@ export default function WorkArea(props) {
       }} />
       <Toolbar align="right" width={40} style={{ top: space.top }} items={righttoolbar} selected={(e, v) => {
       dispatch(actions.setState({keys:"toolbar.right."+v.id,value:{active:!v.active},only:true}))
+      dispatch(actions.setState({keys:"workspace.right",value:!v.active?300:40}))
+      // console.log(space.right)
 
       }}
       />
