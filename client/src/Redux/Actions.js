@@ -19,7 +19,7 @@ export const initialState = {
     server: {
         url: "http://localhost:5000/",
         baseUrl: "http://localhost:5000/",
-        //routes action   
+        //routes action
         auth: {
             get: ({ url }) => {
                 var token = getCookie("token")
@@ -172,27 +172,43 @@ export const reducers = {
 
                 function updateObjectOrArray(obj, keys, value) {
                     if (!obj || !keys) return obj;
-                    
+
                     const [currentKey, ...remainingKeys] = keys.split('.');
                     const type = Object.prototype.toString.call(obj[currentKey])
-                   
+
                     if (type === '[object Array]') {
                       const index = obj[currentKey].findIndex(item => item.id.toString() === remainingKeys[0])
                       if (index !== -1) {
-                        remainingKeys.length === 1
-                          ? (obj[currentKey][index] = { ...obj[currentKey][index], ...value })
-                          : updateObjectOrArray(obj[currentKey][index], remainingKeys.slice(1).join('.'), value)
-                      }
+                        if( remainingKeys.length  === 1){
+                            var newKeys=Object.keys(value)[0]
+                            var newValue=Object.values(value)[0]
+                            if(only){
+                                const newData=obj[currentKey].map((item,i)=>{
+                                  item[newKeys]=false
+                                    if(i===index){
+                                        item[newKeys]=newValue
+                                    }
+
+                                    return item
+                                })
+                                return obj[currentKey] = newData
+
+                            }else{
+                                return(obj[currentKey][index] = { ...obj[currentKey][index], ...value })
+                            }
+                        }else{
+                            updateObjectOrArray(obj[currentKey][index], remainingKeys.slice(1).join('.'), value)
+                        }
+                    }
                     } else if (type === '[object Object]') {
                       obj[currentKey] = remainingKeys.length ? updateObjectOrArray(obj[currentKey], remainingKeys.join('.'), value) : value;
                     }
-                    
+
                     return obj;
                   }
                   var newState={...state}
-                  
-                    const updatedObj = updateObjectOrArray(newState, keys, value);
-               console.log(updatedObj.toolbar.test)
+               updateObjectOrArray(newState, keys, value);
+            //    console.log(updatedObj.toolbar)
             /*     const recursive = (state, i) => {
                     const type = Object.prototype.toString.call(state[newKeys[i]]) || null//si es array detener si no seguir
                     const RealData = JSON.parse(JSON.stringify(state[newKeys[i]]))
@@ -211,7 +227,7 @@ export const reducers = {
                         } else {
                             const newValuekeys = Object.keys(value).map((item) => item)
                             var newState= state[newKeys[i]].map((item, i) => {
-                                
+
                                return newValuekeys.reduce((result, key) => {
                                 if (item.id === value.id && item[key] !== value[key]) {
                                     var newItem={...item,[key]: value[key]}
@@ -250,18 +266,18 @@ export const reducers = {
                 //key=active, i=2, array=state.toolbar.left.map((item,i)=>{if(i===2){item.active=value}})
 
                 /*                 newKeys.map((key, i) => {
-                                   
-                                 
+
+
                                     const type=Object.prototype.toString.call(state[key])//si es array detener si no seguir
                                     if(type==="[object Array]"){
                                         console.log(key,"---arr")
-                
+
                                         //obtener el valor real de state no proxy ejemplo: state.toolbar.left
-                
+
                                         //JSON A OBJETO
                                         const obj = JSON.parse(JSON.stringify(state[key]))
                                         console.log(obj);
-                                        
+
                                         console.log(state[key],"---arr")
                                         state[key].map((item,i)=>{
                                             if(i===newKeys.length-1){
@@ -272,37 +288,37 @@ export const reducers = {
                                         console.log(key,"---obj")
                                         state = state[key]
                                     }
-                
-                
+
+
                                    /*  const bucle = (obj, name) => {
                                         //tetectar si obj es un array o un objeto
                                         // if(obj[name]){
-                
+
                                         // }
-                
+
                                         if (keys.length === 1) {//si es el ultimo elemento
                                             const type=Object.prototype.toString.call(obj[name])//si es array detener si no seguir
-                
+
                                             if(type==="[object Array]"){
                                                 console.log("array","---end")
                                             }else{
                                                 console.log("object","---end")
-                
+
                                             }
                                             // obj[name] = value
                                         } else {//si no es el ultimo elemento
                                             // detect Proxy(Array) or Proxy(Object)
                                             const type=Object.prototype.toString.call(obj[name])//si es array detener si no seguir
-                
+
                                             if(type==="[object Array]"){
                                                 console.log("array","---next")
                                             }else{
                                                 console.log("object","---next")
                                                 bucle(obj[name], newKeys[i + 1])//llamar a la funcion con el siguiente elemento
-                
+
                                             }
-                                          
-                
+
+
                                         }
                                     }
                                     bucle(state, key) */
