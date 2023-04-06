@@ -1,11 +1,11 @@
 {
   "name": "valley-restaurant",
   "version": "1.0.0",
-  "description": "restaurant e-commerce | stack MERN",
+  "description": "restaurant admin | stack MERN",
   "main": "index.js",
   "scripts": {
-    "server":"cd server && npm run dev",
-    "client":"cd client && npm start"
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",

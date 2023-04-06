@@ -1,0 +1,84 @@
+import React, { useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// import Selecto from 'react-selecto';
+import Moveable from 'react-moveable';
+import styled from 'styled-components';
+
+import Guide from './Guide';
+import View from './View';
+import Selector from './Selector';
+
+export default function Canvas({ style }) {
+    const viewerRef = React.useRef(null);
+    const [zoom, setZoom] = React.useState(1);
+    const unit = Math.round(Math.floor(1 / zoom) * 50) || 50;
+    const [selected, setSelected] = React.useState(null);
+    const [selecteds, setSelecteds] = React.useState([]);
+    const [position, setPosition] = React.useState({ x: 0, y: 0 });
+
+
+    const selectorRef = useRef(null);
+    const moveableRef = useRef(null);
+    const horizontalGuidesRef = useRef(null);
+    const verticalGuidesRef = useRef(null);
+
+
+
+
+    useEffect(() => {
+        viewerRef.current.scrollCenter();
+    }, []);
+
+    return (
+        <Container style={{ backgroundColor: "#eee", ...style }} className='moveable-container'>
+            <Selector selectorRef={selectorRef} />
+
+
+            <View
+                viewerRef={viewerRef}
+                horizontalGuidesRef={horizontalGuidesRef}
+                verticalGuidesRef={verticalGuidesRef}
+                zoom={zoom}
+                setZoom={setZoom}
+            >
+
+                <div style={{ backgroundColor: "#fff", height: 600, width: 600 }}>
+
+                    <Guide guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
+                    <Guide guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
+                    {/* 
+
+                    <Rect className="moveable" ></Rect>
+                    <Circle className="moveable" ></Circle> */}
+
+                </div>
+
+            </View>
+        </Container>
+    );
+}
+
+const Container = styled.div`
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+    /* overflow: hidden; */
+    
+`
+const Rect = styled.div`
+    position: absolute;
+    background: red;
+    width: 100px;
+    height: 100px;
+
+
+`
+const Circle = styled.div`
+    position: absolute;
+    background: blue;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+`
