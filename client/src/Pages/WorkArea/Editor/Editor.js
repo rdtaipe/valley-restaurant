@@ -31,19 +31,11 @@ export default function Canvas({ style }) {
     }, []);
 
     return (
-        <Container style={{ backgroundColor: "#eee", ...style }} className='moveable-container'>
+        <Container style={{ backgroundColor: "#eee", ...style }} >
             <Selector selectorRef={selectorRef} />
+            <View viewerRef={viewerRef} setZoom={setZoom}>
 
-
-            <View
-                viewerRef={viewerRef}
-                horizontalGuidesRef={horizontalGuidesRef}
-                verticalGuidesRef={verticalGuidesRef}
-                zoom={zoom}
-                setZoom={setZoom}
-            >
-
-                <div style={{ backgroundColor: "#fff", height: 600, width: 600 }}>
+                <div style={{ backgroundColor: "#fff", height: 600, width: 600 }} className='moveable-container'>
 
                     <Guide guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
                     <Guide guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
