@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Selecto from 'react-selecto';
 import styled from 'styled-components';
 
-export default function Selector({ selectorRef}) {
+export default function Selector({ selectorRef,setSelected,setSelecteds}) {
 
 
     return (
@@ -22,7 +22,7 @@ export default function Selector({ selectorRef}) {
             selectableTargets={[".moveable"]}
         
             
-       /*      onKeydown={e => {
+         onKeydown={e => {
                 if (e.key === "Escape") {
                     selectorRef.current.clearSelection();
                 }
@@ -34,15 +34,19 @@ export default function Selector({ selectorRef}) {
                 }
             }}
 
-
-            onSelect={e => {
+            // onSelect={e => {
+            //     setSelecteds(e.selected[0]);
+            //     setSelected(e.selected);
+            // }}
+            
+             onSelect={e => {
                 const target = e.selected[0];
-                console.log(target)
+                console.log("onSelect",target)
                 if (target) {
                     setSelected(target);
                 }
-            }}
- */
+            }} 
+ 
        />
     )
 }

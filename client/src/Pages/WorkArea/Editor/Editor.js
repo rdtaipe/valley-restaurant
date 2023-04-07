@@ -2,12 +2,13 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import Selecto from 'react-selecto';
-import Moveable from 'react-moveable';
 import styled from 'styled-components';
 
 import Guide from './Guide';
 import View from './View';
 import Selector from './Selector';
+import Moveable from './Moveable';
+
 
 export default function Canvas({ style }) {
     const viewerRef = React.useRef(null);
@@ -28,29 +29,27 @@ export default function Canvas({ style }) {
 
     useEffect(() => {
         viewerRef.current.scrollCenter();
-    }, []);
+    }, [selected]);
 
     return (
-        <Container style={{ backgroundColor: "#eee", ...style }} className='moveable-container'>
-            <Selector selectorRef={selectorRef} />
-
-
-            <View
-                viewerRef={viewerRef}
-                horizontalGuidesRef={horizontalGuidesRef}
-                verticalGuidesRef={verticalGuidesRef}
+        <Container style={{ backgroundColor: "#eee", ...style }} >
+            <Selector selectorRef={selectorRef} setSelected={setSelected} setSelecteds={setSelecteds}  />
+            <Moveable
+                moveableRef={moveableRef}
+                selected={selected}
                 zoom={zoom}
-                setZoom={setZoom}
-            >
+            />
+            
+            <View viewerRef={viewerRef} setZoom={setZoom}>
 
-                <div style={{ backgroundColor: "#fff", height: 600, width: 600 }}>
+                <div style={{ backgroundColor: "#fff", height: 600, width: 600 }} className='moveable-container'>
 
                     <Guide guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
                     <Guide guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
-                    {/* 
+                  
 
                     <Rect className="moveable" ></Rect>
-                    <Circle className="moveable" ></Circle> */}
+                    <Circle className="moveable" ></Circle>
 
                 </div>
 

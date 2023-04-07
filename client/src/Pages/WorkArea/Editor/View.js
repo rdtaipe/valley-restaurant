@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function Editor({ children, setZoom, viewerRef, onScroll, onPinch, horizontalGuidesRef, verticalGuidesRef }) {
 
     const space = useSelector(state => state.workspace)
-
-
     return (
         <Container
             ref={viewerRef}
@@ -34,17 +32,17 @@ export default function Editor({ children, setZoom, viewerRef, onScroll, onPinch
                  onScroll(e)
 
              }
-         }}
+         }}*/
          onPinch={(e) => {
              const zoom = e.zoom;
-             horizontalGuidesRef.current.zoomTo(zoom);
-             verticalGuidesRef.current.zoomTo(zoom);
-             if(onPinch){
-                 onPinch(e)
-             }
+            //  horizontalGuidesRef.current.zoomTo(zoom);
+            //  verticalGuidesRef.current.zoomTo(zoom);
+            //  if(onPinch){
+            //      onPinch(e)
+            //  }
              setZoom(e.zoom);
 
-         }} */
+         }} 
         >
 
             {children}

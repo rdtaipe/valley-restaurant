@@ -15,12 +15,12 @@ export default function Guide({ type, guidesRef, zoom, unit }) {
 
                 backgroundColor="#DDDDDD"
                 textColor="transparent"
-                lineColor="gray"
+                lineColor="transparent"
                 ref={guidesRef}
                 type={type}
                 useResizeObserver={true}
-                displayDragPos={false}
-                displayGuidePos={false}
+                displayDragPos={true}
+                displayGuidePos={true}
                 snapThreshold={5}
                 // zoom={zoom}
                 // unit={unit}
@@ -45,8 +45,31 @@ const Container = styled.div`
     }
     & canvas{
         border-radius:${({ type, n }) => (type === "horizontal" ?`${n/2}px ${n/2}px 0 0!important`: `${n/2}px 0 0 ${n/2}px!important`)};
-        opacity: .3!important;
+        opacity: .2!important;
+        transition: opacity .2s ease-in-out;
     } 
+    &:hover{
+        & canvas{
+            opacity: .7!important;
+        transition: opacity .2s ease-in-out;
+
+        }
+
+    }
+    & .scena-guides-guide-pos{
+        display: none!important;
+    }
+    & .scena-guides-display-drag{
+       color: white!important;
+       background: gray!important;
+       padding: 5px!important;
+       border-radius: 4px!important;
+    }
+    /* &.horizontal:hover  {
+        & canvas{
+            opacity: .7!important;
+        }
+    } */
 /* 
 pointer-events: all!important;
 &:hover + .vertical{
