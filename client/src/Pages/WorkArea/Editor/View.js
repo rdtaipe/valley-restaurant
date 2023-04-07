@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function Editor({ children, setZoom, viewerRef, onScroll, onPinch, horizontalGuidesRef, verticalGuidesRef }) {
 
     const space = useSelector(state => state.workspace)
-
-
     return (
         <Container
             ref={viewerRef}
