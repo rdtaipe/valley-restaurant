@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import Moveable from "react-moveable";
 import { useSelector,useDispatch } from 'react-redux';
 import cssobj from "cssobj";
@@ -36,6 +36,33 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
     const space = useSelector(state => state.workspace)
 
     const [cssRules, setCssRules] = useState([]);
+    const xInputRef = useRef(null);
+   const yInputRef = useRef(null);
+   const [requestCallbacks] = useState(() => {
+       function request() {
+            moveableRef.current.request("draggable", {
+                x: parseInt(xInputRef.current.value),
+                y: parseInt(yInputRef.current.value),
+            }, true);
+        }
+        return {
+            onInput(e) {
+                const ev = (e.nativeEvent || e)
+
+                if (typeof ev.data === "undefined") {
+                    request();
+                }
+            },
+            onKeyUp(e) {
+                e.stopPropagation();
+
+                // enter
+                if (e.keyCode === 13) {
+                    request();
+                }
+            },
+        };
+    });
 
 
 
@@ -53,8 +80,13 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
     console.log(cssRules, space.guides)
 
 
-    return (
+    return (<>
+    <div>
+37                X: <input ref={xInputRef} type="number" defaultValue="100" {...requestCallbacks}></input>&nbsp;
+38                Y: <input ref={yInputRef} type="number" defaultValue="150" {...requestCallbacks}></input>
+39            </div>
         <Moveable
+            // dimensionViewable={true}
             ref={moveableRef}
             target={selected}
             zoom={zoom}
@@ -81,6 +113,8 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             //line guides hel0er
             snappable={true}
             // snapDirections={{"top":true,"left":true,"bottom":true,"right":true}}
+            // clippable={true}
+            
             snapThreshold={5}
             verticalGuidelines={space.guides.y}
             horizontalGuidelines={space.guides.x}
@@ -92,13 +126,18 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             elementSnapDirections={{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}}
             maxSnapElementGuidelineDistance={null}
             elementGuidelines={['.moveable']}
-            clipArea={true}
-            clipVerticalGuidelines={[0, "50%", "100%"]}
-            clipHorizontalGuidelines={[0, "50%", "100%"]}
-
+      
             onDrag={({ target, beforeTranslate }) => {
                 target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
 
+            }}
+            onDragEnd={(e) => {
+                requestAnimationFrame(() => {
+                    const rect = e.moveable.getRect();
+                    xInputRef.current.value = rect.left;
+                    yInputRef.current.value = rect.top;
+                    
+                });
             }}
             /*   onResizeStart={({ setOrigin, dragStart }) => {
                   setOrigin(["%", "%"]);
@@ -166,5 +205,7 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
 
 
         />
+    </>
+
     )
 }

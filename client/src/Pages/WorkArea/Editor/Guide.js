@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Guides from '@scena/react-guides';
+import GuidesInterface from '@scena/react-guides';
 
 export default function Guide({ type, guidesRef, zoom, unit }) {
     const dispatch = useDispatch();
@@ -38,6 +39,8 @@ export default function Guide({ type, guidesRef, zoom, unit }) {
                 // zoom={zoom}
                 // unit={unit}
             />
+
+{/* <GuidesInterface /> */}
         </Container>
     )
 }
