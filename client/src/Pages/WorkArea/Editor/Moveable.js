@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import Moveable from "react-moveable";
+import { useSelector,useDispatch } from 'react-redux';
 import cssobj from "cssobj";
 import cssjson from "cssjson";
 import jsoncss from "jsoncss";
@@ -7,7 +8,7 @@ import { css } from "motion-css";
 
 
 const getCssRules = (target) => {
-    if (!target) return
+    if (!target) return {tocss: '', tojs: {}}
     const cssJson = cssjson.toJSON(target.style.cssText).attributes || {}
     var toCss = (json) => {
 
@@ -32,7 +33,36 @@ const getCssRules = (target) => {
 
 
 export default function MoveableComponent({ moveableRef, selected, selecteds, zoom }) {
+    const space = useSelector(state => state.workspace)
+
     const [cssRules, setCssRules] = useState([]);
+    const xInputRef = useRef(null);
+   const yInputRef = useRef(null);
+   const [requestCallbacks] = useState(() => {
+       function request() {
+            moveableRef.current.request("draggable", {
+                x: parseInt(xInputRef.current.value),
+                y: parseInt(yInputRef.current.value),
+            }, true);
+        }
+        return {
+            onInput(e) {
+                const ev = (e.nativeEvent || e)
+
+                if (typeof ev.data === "undefined") {
+                    request();
+                }
+            },
+            onKeyUp(e) {
+                e.stopPropagation();
+
+                // enter
+                if (e.keyCode === 13) {
+                    request();
+                }
+            },
+        };
+    });
 
 
 
@@ -44,14 +74,19 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
         //     .flat();
 
         console.log(getCssRules(selected))
-    }, [selected, zoom]);
+    }, [selected, zoom,space.guides]);
 
 
-    console.log(cssRules, selected)
+    console.log(cssRules, space.guides)
 
 
-    return (
+    return (<>
+    <div>
+37                X: <input ref={xInputRef} type="number" defaultValue="100" {...requestCallbacks}></input>&nbsp;
+38                Y: <input ref={yInputRef} type="number" defaultValue="150" {...requestCallbacks}></input>
+39            </div>
         <Moveable
+            // dimensionViewable={true}
             ref={moveableRef}
             target={selected}
             zoom={zoom}
@@ -64,8 +99,9 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             rotatable={true}
             scalable={true}
             pinchable={true}
-            snappable={true}
-            keepRatio={true}
+            keepRatio={false}
+            useResizeObserver={true}
+            useMutationObserver={true}
             origin={true}
             edge={true}
             throttleDrag={0}
@@ -74,8 +110,34 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             throttleScale={0}
             renderDirections={["nw", "n", "ne", "e", "se", "s", "sw", "w", "nw", "n"]}
 
+            //line guides hel0er
+            snappable={true}
+            // snapDirections={{"top":true,"left":true,"bottom":true,"right":true}}
+            // clippable={true}
+            
+            snapThreshold={5}
+            verticalGuidelines={space.guides.y}
+            horizontalGuidelines={space.guides.x}
+            snapCenter={true}
+            snapElement={true}
+            snapHorizontal={true}
+            snapVertical={true}
+            snapDirections={{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}}
+            elementSnapDirections={{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}}
+            maxSnapElementGuidelineDistance={null}
+            elementGuidelines={['.moveable']}
+      
             onDrag={({ target, beforeTranslate }) => {
                 target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+
+            }}
+            onDragEnd={(e) => {
+                requestAnimationFrame(() => {
+                    const rect = e.moveable.getRect();
+                    xInputRef.current.value = rect.left;
+                    yInputRef.current.value = rect.top;
+                    
+                });
             }}
             /*   onResizeStart={({ setOrigin, dragStart }) => {
                   setOrigin(["%", "%"]);
@@ -143,5 +205,7 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
 
 
         />
+    </>
+
     )
 }

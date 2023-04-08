@@ -118,6 +118,10 @@ export const initialState = {
         left: 40,
         right: 40,
         bottom: 60,
+        guides:{
+            x:[],
+            y:[],
+        },
         selected: {},
         selecteds: [],
     },

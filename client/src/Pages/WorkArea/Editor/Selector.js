@@ -10,13 +10,15 @@ export default function Selector({ selectorRef,setSelected,setSelecteds}) {
     return (
         <Selecto
             ref={selectorRef}
-            hitRate={0}
             ratio={0}
-            selectByClick={true}
-            selectFromInside={true}
             scroll={true}
             scrollContainerRect={true}
             scrollThreshold={100}
+            hitRate={0}
+            selectByClick={true}
+            selectFromInside={false}
+            toggleContinueSelect={["shift"]}
+            preventDefault={true}
             dragContainer={'.moveable-container'}
             boundContainer={'.moveable-container'}
             selectableTargets={[".moveable"]}

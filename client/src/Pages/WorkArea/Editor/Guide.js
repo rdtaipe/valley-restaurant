@@ -1,8 +1,13 @@
 import React, { useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Guides from '@scena/react-guides';
+import GuidesInterface from '@scena/react-guides';
 
 export default function Guide({ type, guidesRef, zoom, unit }) {
+    const dispatch = useDispatch();
+    const actions = useSelector(state => state.actions);
+    const space = useSelector(state => state.workspace)
     // ref =ref
     // type = horizontal,vertical
     // zoom = 1
@@ -21,10 +26,21 @@ export default function Guide({ type, guidesRef, zoom, unit }) {
                 useResizeObserver={true}
                 displayDragPos={true}
                 displayGuidePos={true}
-                snapThreshold={5}
+                snapThreshold={0}
+                
+                onChangeGuides={({guides }) => {
+                   
+                    if(type === "horizontal"){
+                        dispatch(actions.setState({keys:"workspace.guides.x",value:guides}))
+                    }else{
+                        dispatch(actions.setState({keys:"workspace.guides.y",value:guides}))
+                    }
+                }}
                 // zoom={zoom}
                 // unit={unit}
             />
+
+{/* <GuidesInterface /> */}
         </Container>
     )
 }
