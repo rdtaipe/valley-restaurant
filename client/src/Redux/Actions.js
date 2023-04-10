@@ -124,6 +124,7 @@ export const initialState = {
         },
         selected: {},
         selecteds: [],
+        
     },
     toolbar: {
         leftBar: null,
