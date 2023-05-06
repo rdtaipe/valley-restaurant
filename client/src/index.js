@@ -2,7 +2,7 @@ import reactDom from 'react-dom/client'
 // reduxtulkit
 import { RouterProvider } from 'react-router-dom'
 import Routes from './Routes/Routes'
-import {SetterProvider} from './Redux/Store'
+import SetterProvider from './Redux/Store'
 
 const initialState = {
     animation: {
@@ -225,10 +225,15 @@ const initialState = {
     }
 
 }
+const actions={
+    setData:(state,payload)=>{
+        console.log(state,payload)
+    }
+}
 
 const root = reactDom.createRoot(document.querySelector('#root'))
 root.render(
-    <SetterProvider initialState={initialState}>
+    <SetterProvider state={initialState} actions={actions}>
 
         <RouterProvider router={Routes} />
 

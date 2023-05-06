@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect,useContext } from "react";
 import Editor from "./Editor/Editor";
 import Toolbar from "./Toolbar/Toolbar";
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,14 +7,13 @@ import { copyImageToClipboard } from 'copy-image-clipboard';
 // import {} from 'keycon'
 import Navbar from "./Components/Navbar";
 export default function WorkArea(props) {
-
   const dispatch = useDispatch()
   const actions = useSelector(state => state.actions)
   const lefttoolbar = useSelector(state => state.toolbar.left)
   const righttoolbar = useSelector(state => state.toolbar.right)
   const space = useSelector(state => state.workspace)
   // const [refresh, setRefresh] = useState(false)
-
+console.log(useSelector(state =>state.actions))
   useEffect(() => {
     // console.log(lefttoolbar)
     // console.log(righttoolbar)
