@@ -20,6 +20,7 @@ export default function Canvas({ style }) {
     const [selecteds, setSelecteds] = React.useState([]);
     const [position, setPosition] = React.useState({ x: 0, y: 0 });
 
+
     const selectorRef = useRef(null);
     const moveableRef = useRef(null);
     const horizontalGuidesRef = useRef(null);

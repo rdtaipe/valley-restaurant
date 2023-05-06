@@ -92,11 +92,11 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
         //     .map(({ cssRules }) => cssRules)
         //     .flat();
 
-        console.log(getCssRules(selected))
+        // console.log(getCssRules(selected))
     }, [selected, zoom, space.guides]);
 
 
-    console.log(space.guides)
+    // console.log(space.guides)
 
     const changeValues = (e) => {
 
