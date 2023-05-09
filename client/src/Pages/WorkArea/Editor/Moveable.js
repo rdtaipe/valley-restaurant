@@ -1,14 +1,33 @@
-import React, { useState, useEffect,useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Moveable from "react-moveable";
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import cssobj from "cssobj";
 import cssjson from "cssjson";
 import jsoncss from "jsoncss";
 import { css } from "motion-css";
 
+const test = {
+    top: 100,
+    left: 100,
+    height: 100,
+    width: 100,
+    backgroundColor: "#FFF",
+    borderWidth: 1,// borderWidth;
+    borderStyle: "solid",// borderstyle;
+    borderColor: "#707070",// borderColor;
+    // borderRadius:0,//borderRadius
+    borderTopLeftRadius: 0,//borderRadius top left
+    borderTopRightRadius: 0,//borderRadius top right
+    borderBottomLeftRadius: 0,//borderRadius bottom left
+    borderBottomRightRadius: 0,//borderRadius bottom right
+    opacity: 1,//opacity
+    transform: "rotate(0deg)",
+    zIndex: 0,
+}
+
 
 const getCssRules = (target) => {
-    if (!target) return {tocss: '', tojs: {}}
+    if (!target) return { tocss: '', tojs: {} }
     const cssJson = cssjson.toJSON(target.style.cssText).attributes || {}
     var toCss = (json) => {
 
@@ -32,14 +51,14 @@ const getCssRules = (target) => {
 }
 
 
-export default function MoveableComponent({ moveableRef, selected, selecteds, zoom }) {
+export default function MoveableComponent({ moveableRef, selected, selecteds, zoom, onChange }) {
     const space = useSelector(state => state.workspace)
-
     const [cssRules, setCssRules] = useState([]);
+    const [value, setValue] = useState({})
     const xInputRef = useRef(null);
-   const yInputRef = useRef(null);
-   const [requestCallbacks] = useState(() => {
-       function request() {
+    const yInputRef = useRef(null);
+    const [requestCallbacks] = useState(() => {
+        function request() {
             moveableRef.current.request("draggable", {
                 x: parseInt(xInputRef.current.value),
                 y: parseInt(yInputRef.current.value),
@@ -73,18 +92,30 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
         //     .map(({ cssRules }) => cssRules)
         //     .flat();
 
-        console.log(getCssRules(selected))
-    }, [selected, zoom,space.guides]);
+        // console.log(getCssRules(selected))
+    }, [selected, zoom, space.guides]);
 
 
-    console.log(cssRules, space.guides)
+    // console.log(space.guides)
+
+    const changeValues = (e) => {
+
+
+        onChange("hola")
+    }
+
+    const onDrag = ({ target, clientX, clientY, top, left, isPinch, beforeTranslate }) => {
+        target.style.left = `${left}px`;
+        target.style.top = `${top}px`;
+
+    }
 
 
     return (<>
-    <div>
-37                X: <input ref={xInputRef} type="number" defaultValue="100" {...requestCallbacks}></input>&nbsp;
-38                Y: <input ref={yInputRef} type="number" defaultValue="150" {...requestCallbacks}></input>
-39            </div>
+        <div>
+            X: <input ref={xInputRef} type="number" defaultValue="100" {...requestCallbacks}></input>&nbsp;
+            Y: <input ref={yInputRef} type="number" defaultValue="150" {...requestCallbacks}></input>
+        </div>
         <Moveable
             // dimensionViewable={true}
             ref={moveableRef}
@@ -114,7 +145,7 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             snappable={true}
             // snapDirections={{"top":true,"left":true,"bottom":true,"right":true}}
             // clippable={true}
-            
+
             snapThreshold={5}
             verticalGuidelines={space.guides.y}
             horizontalGuidelines={space.guides.x}
@@ -122,21 +153,18 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
             snapElement={true}
             snapHorizontal={true}
             snapVertical={true}
-            snapDirections={{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}}
-            elementSnapDirections={{"top":true,"left":true,"bottom":true,"right":true,"center":true,"middle":true}}
+            snapDirections={{ "top": true, "left": true, "bottom": true, "right": true, "center": true, "middle": true }}
+            elementSnapDirections={{ "top": true, "left": true, "bottom": true, "right": true, "center": true, "middle": true }}
             maxSnapElementGuidelineDistance={null}
             elementGuidelines={['.moveable']}
-      
-            onDrag={({ target, beforeTranslate }) => {
-                target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
 
-            }}
+            onDrag={onDrag}
             onDragEnd={(e) => {
                 requestAnimationFrame(() => {
                     const rect = e.moveable.getRect();
                     xInputRef.current.value = rect.left;
                     yInputRef.current.value = rect.top;
-                    
+
                 });
             }}
             /*   onResizeStart={({ setOrigin, dragStart }) => {
@@ -179,28 +207,28 @@ export default function MoveableComponent({ moveableRef, selected, selecteds, zo
                 target.style.transform = `scale(${scale[0]}, ${scale[1]})`;
 
             }}
-            onRender={({ target, left, top, width, height, transform, transformOrigin, rotate }) => {
-                target.style.left = `${left}px`;
-                target.style.top = `${top}px`;
-                target.style.width = `${width}px`;
-                target.style.height = `${height}px`;
-                target.style.transform = transform;
-                target.style.transformOrigin = transformOrigin;
-                target.style.transform = `rotate(${rotate}deg)`;
-            }}
-            onRenderGroup={({ targets, left, top, width, height, transform, transformOrigin, rotate }) => {
-                targets.forEach((target) => {
-                    target.style.left = `${left}px`;
-                    target.style.top = `${top}px`;
-                    target.style.width = `${width}px`;
-                    target.style.height = `${height}px`;
-                    target.style.transform = transform;
-                    target.style.transformOrigin = transformOrigin;
-                    target.style.transform = `rotate(${rotate}deg)`;
-                });
-            }}
+        /*  onRender={({ target, left, top, width, height, transform, transformOrigin, rotate }) => {
+             target.style.left = `${left}px`;
+             target.style.top = `${top}px`;
+             target.style.width = `${width}px`;
+             target.style.height = `${height}px`;
+             target.style.transform = transform;
+             target.style.transformOrigin = transformOrigin;
+             target.style.transform = `rotate(${rotate}deg)`;
+         }}
+         onRenderGroup={({ targets, left, top, width, height, transform, transformOrigin, rotate }) => {
+             targets.forEach((target) => {
+                 target.style.left = `${left}px`;
+                 target.style.top = `${top}px`;
+                 target.style.width = `${width}px`;
+                 target.style.height = `${height}px`;
+                 target.style.transform = transform;
+                 target.style.transformOrigin = transformOrigin;
+                 target.style.transform = `rotate(${rotate}deg)`;
+             });
+         }}
 
-
+*/
 
 
 

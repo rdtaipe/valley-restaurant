@@ -27,20 +27,20 @@ export default function Guide({ type, guidesRef, zoom, unit }) {
                 displayDragPos={true}
                 displayGuidePos={true}
                 snapThreshold={0}
-                
-                onChangeGuides={({guides }) => {
-                   
-                    if(type === "horizontal"){
-                        dispatch(actions.setState({keys:"workspace.guides.x",value:guides}))
-                    }else{
-                        dispatch(actions.setState({keys:"workspace.guides.y",value:guides}))
+
+                onChangeGuides={({ guides }) => {
+
+                    if (type === "horizontal") {
+                        dispatch(actions.setter({ keys: "workspace.guides.x", value: guides }))
+                    } else {
+                        dispatch(actions.setter({ keys: "workspace.guides.y", value: guides }))
                     }
                 }}
-                // zoom={zoom}
-                // unit={unit}
+            // zoom={zoom}
+            // unit={unit}
             />
 
-{/* <GuidesInterface /> */}
+            {/* <GuidesInterface /> */}
         </Container>
     )
 }
@@ -51,8 +51,8 @@ const Container = styled.div`
     /* overflow: hidden; */
     height: ${({ type, n }) => (type === "horizontal" ? n + "px" : `calc(100% - ${0}px)`)};
     width: ${({ type, n }) => (type === "horizontal" ? `calc(100% - ${0}px)` : n + "px")};
-    left: ${({ type, n }) => (type === "horizontal" ? 0+ "px" : -n + "px")};
-    top: ${({ type, n }) => (type === "horizontal" ? -n+"px" : 0 + "px")};
+    left: ${({ type, n }) => (type === "horizontal" ? 0 + "px" : -n + "px")};
+    top: ${({ type, n }) => (type === "horizontal" ? -n + "px" : 0 + "px")};
     
    /* background: red; */
     /* border-radios:50%; */
@@ -60,7 +60,7 @@ const Container = styled.div`
         background-color:  aqua!important;
     }
     & canvas{
-        border-radius:${({ type, n }) => (type === "horizontal" ?`${n/2}px ${n/2}px 0 0!important`: `${n/2}px 0 0 ${n/2}px!important`)};
+        border-radius:${({ type, n }) => (type === "horizontal" ? `${n / 2}px ${n / 2}px 0 0!important` : `${n / 2}px 0 0 ${n / 2}px!important`)};
         opacity: .2!important;
         transition: opacity .2s ease-in-out;
     } 

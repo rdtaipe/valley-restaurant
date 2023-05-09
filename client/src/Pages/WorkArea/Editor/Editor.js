@@ -10,6 +10,8 @@ import Selector from './Selector';
 import Moveable from './Moveable';
 
 
+
+
 export default function Canvas({ style }) {
     const viewerRef = React.useRef(null);
     const [zoom, setZoom] = React.useState(1);
@@ -33,20 +35,20 @@ export default function Canvas({ style }) {
 
     return (
         <Container style={{ backgroundColor: "#eee", ...style }} >
-            <Selector selectorRef={selectorRef} setSelected={setSelected} setSelecteds={setSelecteds}  />
+            <Selector selectorRef={selectorRef} setSelected={setSelected} setSelecteds={setSelecteds} />
             <Moveable
                 moveableRef={moveableRef}
                 selected={selected}
                 zoom={zoom}
             />
-            
+
             <View viewerRef={viewerRef} setZoom={setZoom}>
 
                 <div style={{ backgroundColor: "#fff", height: 600, width: 600 }} className='moveable-container'>
 
                     <Guide guidesRef={horizontalGuidesRef} type={"horizontal"} zoom={zoom} unit={unit} />
                     <Guide guidesRef={verticalGuidesRef} type={"vertical"} zoom={zoom} unit={unit} />
-                  
+
 
                     <Rect className="moveable" ></Rect>
                     <Circle className="moveable" ></Circle>
@@ -80,4 +82,5 @@ const Circle = styled.div`
     width: 100px;
     height: 100px;
     border-radius: 50%;
+    transform
 `

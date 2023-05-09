@@ -133,7 +133,7 @@ export default class Editor extends React.PureComponent {
     width: 400,
     height: 600,
   };
-  
+
   state = {
     selectedTargets: [],
     horizontalGuides: [],
@@ -192,7 +192,7 @@ export default class Editor extends React.PureComponent {
           zoom={zoom}
           unit={unit}
           onChangeGuides={(e) => {
-            this.setState({
+            this.setter({
               horizontalGuides: e.guides,
             });
           }}
@@ -209,7 +209,7 @@ export default class Editor extends React.PureComponent {
           zoom={zoom}
           unit={unit}
           onChangeGuides={(e) => {
-            this.setState({
+            this.setter({
               verticalGuides: e.guides,
             });
           }}
@@ -249,7 +249,7 @@ export default class Editor extends React.PureComponent {
             verticalGuides.current?.scrollGuides(e.scrollLeft);
           }}
           onPinch={(e) => {
-            this.setState({
+            this.setter({
               zoom: e.zoom,
             });
           }}
@@ -505,7 +505,7 @@ export default class Editor extends React.PureComponent {
   }
   promiseState(state) {
     return new Promise((resolve) => {
-      this.setState(state, () => {
+      this.setter(state, () => {
         resolve();
       });
     });
@@ -781,7 +781,7 @@ export default class Editor extends React.PureComponent {
   }
 
   onMenuChange = (id) => {
-    this.setState({
+    this.setter({
       selectedMenu: id,
     });
   };
