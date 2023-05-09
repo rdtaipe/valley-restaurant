@@ -222,18 +222,15 @@ const initialState = {
             },
 
         ]
-    }
+    },
+    test:0,
 
 }
-const actions={
-    setData:(state,payload)=>{
-        console.log(state,payload)
-    }
-}
+
 
 const root = reactDom.createRoot(document.querySelector('#root'))
 root.render(
-    <SetterProvider state={initialState} actions={actions}>
+    <SetterProvider state={initialState}>
 
         <RouterProvider router={Routes} />
 

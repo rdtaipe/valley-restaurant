@@ -15,14 +15,22 @@ export default function WorkArea(props) {
   // const [refresh, setRefresh] = useState(false)
   // console.log(useSelector(state => state.actions))
 
-  const [state, setState] = actions.useSetter("workspace.right")
+  const [state, setState] = actions.useSetter("gay")
 
   useEffect(() => {
+    actions.setActions({
+      setData: (state, action) => {
+        console.log(state,action)
+      }
+    })
+    console.log(actions)
+    if(actions.setData){
+      dispatch(actions.setData("hola"))
  
 
+    }
+  
 
-    // console.log(lefttoolbar)
-    // console.log(righttoolbar)
   }, [lefttoolbar, righttoolbar, space])
 
   return (
